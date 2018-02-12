@@ -1,6 +1,9 @@
 package com.htc.my.mymusicplayer;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -21,6 +24,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -46,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private MySong current_song_OnService = null;                           // 标记当前正在musicService上播放的音乐
     private ProgressBar progressBar;
     private AppCompatImageView image_view_play_toggle;
+    private ImageView image_view_logo;
     private TextView music_text_name;
     private TextView music_text_author;
     private boolean current_song_state = false;
@@ -103,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         mMediaSessionManager.release();
         unbindService(connection);
+        handler.removeMessages((new Message()).what=1);
         this.finish();
     }
 
@@ -119,7 +127,11 @@ public class MainActivity extends AppCompatActivity {
         music_text_name = (TextView) findViewById(com.htc.my.mymusicplayer.R.id.music_text_view_name);
         music_text_author = (TextView) findViewById(com.htc.my.mymusicplayer.R.id.music_text_view_artist);
         layout_root = (RelativeLayout) findViewById(com.htc.my.mymusicplayer.R.id.layout_root);
+        image_view_logo =(ImageView)findViewById(R.id.image_view_logo);
         mMediaSessionManager.MediaSessionInitMainActivity(image_view_play_toggle);
+        Message msg = new Message();
+        msg.what = 2;
+        handler.sendMessage(msg);
     }
 
     // 设置所有组件的监听事件
@@ -439,6 +451,54 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+/*    private class NextThread extends Thread{
+        @Override
+        public void run(){
+            while (true){
+
+                handler.sendMessage(new Message());
+                break;
+            }
+        }
+    }*/
+
+    private Handler handler = new Handler() {
+
+        public void handleMessage(Message msg) {
+            //旋转动画：围绕x轴旋转
+            switch (msg.what) {
+
+                case 1:
+             /*       //旋转动画：围绕x轴旋转
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(image_view_logo, "rotationX", 0, 360, 0);
+                    animator.setDuration(3000);
+                    animator.start();
+                    message.what = 2;
+                    handler.sendMessageDelayed(message,10000);*/
+                    break;
+
+                case 2:
+                    //旋转动画:围绕z轴旋转
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(image_view_logo, "rotation", 0, 720);
+                    animator.setDuration(3000);
+                    animator.start();
+                    Message message = new Message();
+                    message.what = 2;
+                    handler.sendMessageDelayed(message,10000);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    };
+/*    // 集中管理线程的启动
+    public void startAllThread(){
+        if(nextThread == null) nextThread = new NextThread();
+        if(nextThread.getState() == Thread.State.TERMINATED || nextThread.getState() == Thread.State.NEW) {
+            nextThread.start();
+        }
+    }*/
 
 
 }
