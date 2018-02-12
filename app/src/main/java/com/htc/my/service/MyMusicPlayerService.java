@@ -150,55 +150,57 @@ public class MyMusicPlayerService extends Service {
 
     @Override
     public int onStartCommand(Intent intent,int flags,int startId){
-        if(mediaPlayer==null) mediaPlayer = new MediaPlayer();
 
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                if(play_song_model == 0) {
-                    ++song_id;
-                }else if(play_song_model == 1){
-                    song_id = music_binder.rand_music_id();
+        if(intent != null) {
+
+            if (mediaPlayer == null) mediaPlayer = new MediaPlayer();
+
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    if (play_song_model == 0) {
+                        ++song_id;
+                    } else if (play_song_model == 1) {
+                        song_id = music_binder.rand_music_id();
+                    }
+
+                    song_id = (song_id) % allsongs.size();
+                    current_song = allsongs.get(song_id);
+                    music_path = current_song.getMusicPath();
+                    my_music_play();
+                    my_music_play();
+                    isEnd = true;
                 }
+            });
+            Log.i(log_name, log_name + " on start");
+            int music_play_operation = intent.getIntExtra("MSG", 0);
 
-                song_id = (song_id)%allsongs.size();
-                current_song=allsongs.get(song_id);
-                music_path=current_song.getMusicPath();
+            // 从头开始播放音乐
+            if (music_play_operation == PlayerConstants.MSG_PLAY) {
+
+                current_song = intent.getParcelableExtra("song");
+                music_path = current_song.getMusicPath();
                 my_music_play();
-                my_music_play();
-                isEnd = true;
+                Log.i(log_name, "MSG_PLAY");
+
             }
-        });
-        Log.i(log_name,log_name + " on start");
-        int music_play_operation = intent.getIntExtra("MSG",0);
+            // 暂停播放音乐
+            else if (music_play_operation == PlayerConstants.MSG_PAUSE) {
 
-        // 从头开始播放音乐
-        if(music_play_operation == PlayerConstants.MSG_PLAY){
+                my_music_pause();
+                Log.i(log_name, "MSG_PAUSE");
 
-            current_song=intent.getParcelableExtra("song");
-            music_path=current_song.getMusicPath();
-            my_music_play();
-            Log.i(log_name,"MSG_PLAY");
+            }
+            // 从暂停中恢复播放音乐
+            else if (music_play_operation == PlayerConstants.MSG_CONTINUE) {
 
+                my_music_continue();
+                Log.i(log_name, "MSG_CONTINUE");
+
+            } else {
+                Log.i(log_name, log_name + " has strange things happened.");
+            }
         }
-        // 暂停播放音乐
-        else if(music_play_operation == PlayerConstants.MSG_PAUSE){
-
-            my_music_pause();
-            Log.i(log_name,"MSG_PAUSE");
-
-        }
-        // 从暂停中恢复播放音乐
-        else if(music_play_operation == PlayerConstants.MSG_CONTINUE){
-
-            my_music_continue();
-            Log.i(log_name,"MSG_CONTINUE");
-
-        }
-        else {
-            Log.i(log_name,log_name + " has strange things happened.");
-        }
-
         return super.onStartCommand(intent,flags,startId);
     }
 
