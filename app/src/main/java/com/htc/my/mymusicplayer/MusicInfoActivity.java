@@ -227,6 +227,7 @@ public class MusicInfoActivity extends AppCompatActivity {
         music_current_time = (TextView)findViewById(R.id.text_view_progress);
         music_end_time = (TextView)findViewById(R.id.text_view_duration);
         music_back_list = (RadioButton)findViewById(R.id.music_list_back);
+        mMediaSessionManager.MediaSessionInitMusicInfo(play_pause_imageView,shadowImageView);
     }
 
     // 设置所有组件的监听事件

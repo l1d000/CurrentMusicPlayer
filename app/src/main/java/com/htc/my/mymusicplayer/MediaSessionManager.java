@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
 import android.view.KeyEvent;
 
@@ -21,6 +22,9 @@ public class MediaSessionManager{
     private MediaMetadata.Builder mbuilder = null;
     private Context mContext;
     private static MediaSessionManager instance = null;
+    private AppCompatImageView play_pause_imageView = null;
+    private ShadowImageView shadowImageView = null;
+    private AppCompatImageView image_view_play_toggle = null;
 
     public MediaSessionManager(Context mContext) {
         this.mContext = mContext;
@@ -38,6 +42,15 @@ public class MediaSessionManager{
     public static MediaSessionManager getInstance() {
         return instance;
      }
+
+    public  void MediaSessionInitMusicInfo(AppCompatImageView play_pause_imageView,ShadowImageView shadowImageView){
+        this.play_pause_imageView = play_pause_imageView;
+        this.shadowImageView = shadowImageView;
+    }
+
+    public  void MediaSessionInitMainActivity(AppCompatImageView image_view_play_toggle ){
+        this.image_view_play_toggle = image_view_play_toggle;
+    }
     /**
      * API 21 以上 耳机多媒体按钮监听 MediaSessionCompat.Callback
      */
@@ -156,11 +169,19 @@ public class MediaSessionManager{
             Intent intent=new Intent(mContext, MyMusicPlayerService.class);
             intent.putExtra("MSG",PlayerConstants.MSG_CONTINUE);
             mContext.startService(intent);
+            if (play_pause_imageView != null) play_pause_imageView.setImageResource(R.drawable.ic_pause);
+            // 开始"大盘子"的运动
+            if(shadowImageView!=null) shadowImageView.startRotateAnimation();
+            if(image_view_play_toggle != null) image_view_play_toggle.setImageResource(R.drawable.ic_pause_1);
         } else if (keyCode == KeyEvent.KEYCODE_MEDIA_PAUSE) {
             Log.d(TAG,"KEYCODE_MEDIA_PAUSE ");
             Intent intent=new Intent(mContext, MyMusicPlayerService.class);
             intent.putExtra("MSG", PlayerConstants.MSG_PAUSE);
             mContext.startService(intent);
+            if (play_pause_imageView != null) play_pause_imageView.setImageResource(R.drawable.ic_play);
+            // 暂停"大盘子"的活动
+            if(shadowImageView!=null) shadowImageView.pauseRotateAnimation();
+            if(image_view_play_toggle != null) image_view_play_toggle.setImageResource(R.drawable.ic_play_1);
 
         } else if (keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
             Log.d(TAG,"KEYCODE_MEDIA_PLAY_PAUSE ");

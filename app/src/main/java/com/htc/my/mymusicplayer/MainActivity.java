@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
         music_text_name = (TextView) findViewById(com.htc.my.mymusicplayer.R.id.music_text_view_name);
         music_text_author = (TextView) findViewById(com.htc.my.mymusicplayer.R.id.music_text_view_artist);
         layout_root = (RelativeLayout) findViewById(com.htc.my.mymusicplayer.R.id.layout_root);
+        mMediaSessionManager.MediaSessionInitMainActivity(image_view_play_toggle);
     }
 
     // 设置所有组件的监听事件
