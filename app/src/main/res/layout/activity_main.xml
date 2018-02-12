@@ -17,7 +17,7 @@
         toolbar:titleTextAppearance="@style/MP.Theme.TextAppearance.Light.Toolbar.Title"
         toolbar:title=" "
         >
-        <include layout="@layout/layout_toolbar_button"></include>
+        <include layout="@layout/main_layout_toolbar_button"></include>
     </android.support.v7.widget.Toolbar>
 
     <View

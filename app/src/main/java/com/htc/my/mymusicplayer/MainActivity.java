@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -37,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "HTC-M MainActivity";
     private Toolbar main_toolbar;
-    private RadioButton main_button;
 
     private RecyclerView recyclerView;               // 音乐列表
     private ArrayList<MySong> allSongs;              // 储存所有的音乐
@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        main_button.setChecked(true);
         Log.i("main","requestCode: "+requestCode);
         Log.i("main","result: "+resultCode);
         // 此处应判别传回消息的Actitvity为videoActivity是才执行
@@ -110,11 +109,10 @@ public class MainActivity extends AppCompatActivity {
     // 获取所有的组件
     private void  findAllViewById(){
         main_toolbar = (Toolbar) findViewById(com.htc.my.mymusicplayer.R.id.main_toolbar);
-        main_button = (RadioButton) findViewById(com.htc.my.mymusicplayer.R.id.listButton);
+        main_toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(main_toolbar);
 
         recyclerView = (RecyclerView)findViewById(com.htc.my.mymusicplayer.R.id.recycler_view);
-        main_button.setChecked(true);
         progressBar = (ProgressBar)findViewById(com.htc.my.mymusicplayer.R.id.progress_bar);
 
         image_view_play_toggle = (AppCompatImageView) findViewById(com.htc.my.mymusicplayer.R.id.image_view_play_toggle);
