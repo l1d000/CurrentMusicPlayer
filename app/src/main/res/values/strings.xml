@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">HTC Music  </string>
+    <string name="layoutManager_linear">LinearLayoutManager</string>
+
+</resources>
