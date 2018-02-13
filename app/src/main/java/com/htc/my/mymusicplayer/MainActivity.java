@@ -95,10 +95,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(music_binder!=null && music_binder.isPlayingOnService()) {
-            image_view_play_toggle.setImageResource(R.drawable.ic_pause_1);
+            if(image_view_play_toggle != null)
+                image_view_play_toggle.setImageResource(R.drawable.ic_pause_1);
             current_song_state = true;
         }else{
-            image_view_play_toggle.setImageResource(R.drawable.ic_play_1);
+            if(image_view_play_toggle != null)
+                image_view_play_toggle.setImageResource(R.drawable.ic_play_1);
             current_song_state = false;
         }
 
