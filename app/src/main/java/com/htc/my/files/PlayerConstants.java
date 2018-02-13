@@ -1,8 +1,9 @@
 package com.htc.my.files;
 
 /**
- * Created by qingsong on 17-3-27.
+ * Created by lidongzhou on 18-2-13.
  */
+
 
 public class PlayerConstants {
     public static final int MSG_PLAY=1;         // 播放

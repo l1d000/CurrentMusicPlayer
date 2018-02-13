@@ -1,5 +1,9 @@
 package com.htc.my.files;
 
+/**
+ * Created by lidongzhou on 18-2-13.
+ */
+
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
@@ -9,11 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
-/**
- * Created by qingsong on 17-3-27.
- * 从系统中读取所有的音乐信息
- */
 
 public class AllSongs {
 

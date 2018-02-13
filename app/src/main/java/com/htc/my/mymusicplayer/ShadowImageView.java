@@ -1,5 +1,9 @@
 package com.htc.my.mymusicplayer;
 
+/**
+ * Created by lidongzhou on 18-2-13.
+ */
+
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
@@ -17,15 +21,6 @@ import android.util.AttributeSet;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
-/**
- * Created with Android Studio.
- * User: ryan.hoo.j@gmail.com
- * Date: 9/8/16
- * Time: 4:23 PM
- * Desc: ShadowImageView
- * Stole from {@link android.support.v4.widget.SwipeRefreshLayout}'s implementation to display beautiful shadow
- * for circle ImageView.
- */
 public class ShadowImageView extends ImageView {
 
     private static final int KEY_SHADOW_COLOR = 0x1E000000;

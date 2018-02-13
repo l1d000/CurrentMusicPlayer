@@ -1,5 +1,9 @@
 package com.htc.my.mymusicplayer;
 
+/**
+ * Created by lidongzhou on 18-2-13.
+ */
+
 import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

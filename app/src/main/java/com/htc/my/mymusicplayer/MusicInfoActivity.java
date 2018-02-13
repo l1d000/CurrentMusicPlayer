@@ -1,5 +1,10 @@
 package com.htc.my.mymusicplayer;
 
+/**
+ * Created by lidongzhou on 18-2-13.
+ */
+
+
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -26,11 +31,9 @@ import com.htc.my.files.MySong;
 
 import java.util.ArrayList;
 
-/**
- * Created by Lidong Zhou on 18-2-12.
- */
-
 public class MusicInfoActivity extends AppCompatActivity {
+    private static final String TAG = "HTC-M MusicInfo";
+
     private static AppCompatImageView play_pause_imageView; // 播放当前音乐
     private AppCompatImageView next_song_imageView;         // 切换至下一首音乐
     private AppCompatImageView last_song_imageView;         // 切换至上一首音乐
@@ -54,8 +57,7 @@ public class MusicInfoActivity extends AppCompatActivity {
     private boolean isEnd=false;        // 结束
     private boolean serviceSate=false;  // 音乐后台状态
     private Intent interactionIntent;   // 与MainActivity进行信息的交互
-
-    private String log_name = "qingsong";                   // 监听事件者
+    
     private MyMusicPlayerService.MusicPlayerServiceBinder music_binder;
     private MySong currentSong;
     private MySong mainSong;
@@ -69,7 +71,7 @@ public class MusicInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_music);
-        Log.i(log_name," on create");
+        Log.i(TAG," on create");
         this.createLinkWithPlayerService();
         overridePendingTransition(R.anim.enter_dapanzi_from_bottom,R.anim.exit_dapanzi_to_bottom);
         mMediaSessionManager =  MediaSessionManager.getInstance();
@@ -81,7 +83,7 @@ public class MusicInfoActivity extends AppCompatActivity {
     protected void onDestroy(){
         super.onDestroy();
         music_binder.setSongIdOnService(currentSong_id);
-        Log.i(log_name,log_name+" on destroy");
+        Log.i(TAG," on destroy");
         unbindService(connection);
         seekThreadFlag = false;
         this.finish();
@@ -120,7 +122,7 @@ public class MusicInfoActivity extends AppCompatActivity {
             else {
                 currentPositon = music_binder.getMusicCurrentPosition();
             }
-            Log.i(log_name,log_name + currentSong);
+            Log.i(TAG, ""+currentSong);
 
             setAllViewListener();
             initAllView();
@@ -138,8 +140,8 @@ public class MusicInfoActivity extends AppCompatActivity {
         music_author.setText(currentSong.getAuthor());
         music_current_time.setText(AllSongs.formatTime(currentPositon));
         music_end_time.setText(AllSongs.formatTime(currentSong.getDuration()));
-        Log.i(log_name,log_name+serviceSate);
-        Log.i(log_name,"thread" + currentSong.getTitle());
+        Log.i(TAG,""+serviceSate);
+        Log.i(TAG,"thread" + currentSong.getTitle());
 
         if(serviceSate) {
             isStart=false;
@@ -196,7 +198,7 @@ public class MusicInfoActivity extends AppCompatActivity {
                 if(music_binder.isEndOnService()) {
                     shadowImageView.pauseRotateAnimation();
                     play_pause_imageView.setImageResource(R.drawable.ic_play);
-                    Log.i(log_name,"tread in seek");
+                    Log.i(TAG,"tread in seek");
                     currentSong=music_binder.getSongOnService();
                     currentSong_id=music_binder.getSongIdOnService();
                     music_title.setText(currentSong.getTitle());
@@ -243,7 +245,7 @@ public class MusicInfoActivity extends AppCompatActivity {
                 }else if(isPause){
                     my_music_continue();
                 }else{
-                    Log.i(log_name,"My Music produce a unkown problem!");
+                    Log.i(TAG,"My Music produce a unkown problem!");
                 }
             }
         });
@@ -271,7 +273,7 @@ public class MusicInfoActivity extends AppCompatActivity {
                 if(fromUser) {
                     music_binder.seekMusicPosition(progress);
                     music_current_time.setText(AllSongs.formatTime(progress));
-                    Log.i(log_name,progress+"");
+                    Log.i(TAG,progress+"");
                 }
             }
             @Override
@@ -281,7 +283,7 @@ public class MusicInfoActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 music_binder.musicSeekTo();
-                Log.i(log_name,"stop touch");
+                Log.i(TAG,"stop touch");
             }
         });
 
@@ -332,7 +334,7 @@ public class MusicInfoActivity extends AppCompatActivity {
         mMediaSessionManager.updateMetaData(currentSong);
         // 开始"大盘子"的运动
         if(shadowImageView!=null) shadowImageView.startRotateAnimation();
-        Log.i(log_name , log_name + " start playing music.");
+        Log.i(TAG ,   " start playing music.");
     }
 
     //音乐暂停
@@ -348,7 +350,7 @@ public class MusicInfoActivity extends AppCompatActivity {
         play_pause_imageView.setImageResource(R.drawable.ic_play);
         // 暂停"大盘子"的活动
         shadowImageView.pauseRotateAnimation();
-        Log.i(log_name,log_name+ " pause playing music.");
+        Log.i(TAG, " pause playing music.");
     }
 
     //音乐继续播放
@@ -365,14 +367,14 @@ public class MusicInfoActivity extends AppCompatActivity {
         play_pause_imageView.setImageResource(R.drawable.ic_pause);
         // 恢复"大盘子"的活动
         shadowImageView.resumeRotateAnimation();
-        Log.i(log_name,log_name + " continue playing music.");
+        Log.i(TAG,  " continue playing music.");
 
     }
 
     // 播放下一首音乐
     private void my_music_next(){
         if(play_music_model == 0) {
-            Log.i(log_name, log_name + " go to next " + ((currentSong_id + 1) % music_amount));
+            Log.i(TAG,  " go to next " + ((currentSong_id + 1) % music_amount));
             ++currentSong_id;
         }else if(play_music_model == 1){
             currentSong_id = music_binder.rand_music_id();
@@ -392,7 +394,7 @@ public class MusicInfoActivity extends AppCompatActivity {
             currentSong_id = music_binder.rand_music_id();
         }
 
-        Log.i(log_name,log_name + " go to last " + currentSong_id);
+        Log.i(TAG,  " go to last " + currentSong_id);
         currentSong=allSongs.get(currentSong_id);
         this.initAllView();
         my_music_start_play();

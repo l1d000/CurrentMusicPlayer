@@ -1,5 +1,10 @@
 package com.htc.my.service;
 
+/**
+ * Created by lidongzhou on 18-2-13.
+ */
+
+
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -14,19 +19,17 @@ import com.htc.my.files.PlayerConstants;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by qingsong on 17-3-27.
- */
 
 public class MyMusicPlayerService extends Service {
 
+    private static final String TAG = "HTC-M PlayerService";
     private static MediaPlayer mediaPlayer = null;
     private String music_path = "";
     private boolean isPause = false;
     private boolean isStart = false;
     private boolean isPlaying = false;
     private boolean isEnd = false;
-    private String log_name = "player_service";
+
     private MusicPlayerServiceBinder music_binder = new MusicPlayerServiceBinder();
     private MySong current_song = null;
     private int seek_position = -1;   // 标记上次暂停播放音乐时,已经播放到的位置
@@ -145,7 +148,7 @@ public class MyMusicPlayerService extends Service {
             allsongs = (ArrayList<MySong>) AllSongs.getAllSongs(MyMusicPlayerService.this);
             music_amount = allsongs.size();
         }
-        Log.i(log_name,log_name+" on create");
+        Log.i(TAG," on create");
     }
 
     @Override
@@ -172,7 +175,7 @@ public class MyMusicPlayerService extends Service {
                     isEnd = true;
                 }
             });
-            Log.i(log_name, log_name + " on start");
+            Log.i(TAG, " on start");
             int music_play_operation = intent.getIntExtra("MSG", 0);
 
             // 从头开始播放音乐
@@ -181,24 +184,24 @@ public class MyMusicPlayerService extends Service {
                 current_song = intent.getParcelableExtra("song");
                 music_path = current_song.getMusicPath();
                 my_music_play();
-                Log.i(log_name, "MSG_PLAY");
+                Log.i(TAG, "MSG_PLAY");
 
             }
             // 暂停播放音乐
             else if (music_play_operation == PlayerConstants.MSG_PAUSE) {
 
                 my_music_pause();
-                Log.i(log_name, "MSG_PAUSE");
+                Log.i(TAG, "MSG_PAUSE");
 
             }
             // 从暂停中恢复播放音乐
             else if (music_play_operation == PlayerConstants.MSG_CONTINUE) {
 
                 my_music_continue();
-                Log.i(log_name, "MSG_CONTINUE");
+                Log.i(TAG, "MSG_CONTINUE");
 
             } else {
-                Log.i(log_name, log_name + " has strange things happened.");
+                Log.i(TAG, " has strange things happened.");
             }
         }
         return super.onStartCommand(intent,flags,startId);

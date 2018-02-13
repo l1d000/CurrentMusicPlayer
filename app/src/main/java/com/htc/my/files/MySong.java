@@ -1,11 +1,11 @@
 package com.htc.my.files;
 
+/**
+ * Created by lidongzhou on 18-2-13.
+ */
+
 import android.os.Parcel;
 import android.os.Parcelable;
-
-/**
- * Created by qingsong on 17-3-26.
- */
 
 public class MySong implements Parcelable{
     private Long id;             // 音乐id
