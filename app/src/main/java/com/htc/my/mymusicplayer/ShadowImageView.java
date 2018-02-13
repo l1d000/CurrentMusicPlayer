@@ -6,6 +6,7 @@ package com.htc.my.mymusicplayer;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -21,6 +22,7 @@ import android.util.AttributeSet;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
+@SuppressLint("AppCompatCustomView")
 public class ShadowImageView extends ImageView {
 
     private static final int KEY_SHADOW_COLOR = 0x1E000000;
