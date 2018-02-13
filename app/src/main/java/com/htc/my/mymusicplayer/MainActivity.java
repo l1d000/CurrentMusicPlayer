@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         image_view_logo =(ImageView)findViewById(R.id.image_view_logo);
         mMediaSessionManager.MediaSessionInitMainActivity(image_view_play_toggle);
         Message msg = new Message();
-        msg.what = 2;
+        msg.what = PlayerConstants.LOGO_ANIMATION_2;
         handler.sendMessage(msg);
     }
 
@@ -467,7 +467,7 @@ public class MainActivity extends AppCompatActivity {
             //旋转动画：围绕x轴旋转
             switch (msg.what) {
 
-                case 1:
+                case PlayerConstants.LOGO_ANIMATION_1:
              /*       //旋转动画：围绕x轴旋转
                     ObjectAnimator animator = ObjectAnimator.ofFloat(image_view_logo, "rotationX", 0, 360, 0);
                     animator.setDuration(3000);
@@ -476,13 +476,13 @@ public class MainActivity extends AppCompatActivity {
                     handler.sendMessageDelayed(message,10000);*/
                     break;
 
-                case 2:
+                case PlayerConstants.LOGO_ANIMATION_2:
                     //旋转动画:围绕z轴旋转
                     ObjectAnimator animator = ObjectAnimator.ofFloat(image_view_logo, "rotation", 0, 720);
                     animator.setDuration(3000);
                     animator.start();
                     Message message = new Message();
-                    message.what = 2;
+                    message.what = PlayerConstants.LOGO_ANIMATION_2;
                     handler.sendMessageDelayed(message,10000);
                     break;
                 default:
