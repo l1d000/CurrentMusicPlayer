@@ -478,7 +478,8 @@ public class MainActivity extends AppCompatActivity {
 
                 case PlayerConstants.LOGO_ANIMATION_2:
                     //旋转动画:围绕z轴旋转
-                    ObjectAnimator animator = ObjectAnimator.ofFloat(image_view_logo, "rotation", 0, 720);
+                    int  val = (int)(Math.random()*4+2);
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(image_view_logo, "rotation", 0, 360*val);
                     animator.setDuration(3000);
                     animator.start();
                     Message message = new Message();
