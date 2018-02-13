@@ -26,7 +26,7 @@ import com.htc.my.files.PlayerConstants;
 import com.htc.my.service.MyMusicPlayerService;
 
 
-import com.htc.my.files.MySong;
+import com.htc.my.files.HtcSong;
 
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class MusicInfoActivity extends AppCompatActivity {
     private RadioButton music_back_list;                        // 音乐时长
 
     private int music_amount = 0 ;
-    private ArrayList<MySong> allSongs;
+    private ArrayList<HtcSong> allSongs;
 
     private ShadowImageView shadowImageView;
 
@@ -57,10 +57,10 @@ public class MusicInfoActivity extends AppCompatActivity {
     private boolean isEnd=false;        // 结束
     private boolean serviceSate=false;  // 音乐后台状态
     private Intent interactionIntent;   // 与MainActivity进行信息的交互
-    
+
     private MyMusicPlayerService.MusicPlayerServiceBinder music_binder;
-    private MySong currentSong;
-    private MySong mainSong;
+    private HtcSong currentSong;
+    private HtcSong mainSong;
     private static int currentSong_id=-1;
     private int currentPositon= 0;
     private SeekBarThread seekBarThread = new SeekBarThread();

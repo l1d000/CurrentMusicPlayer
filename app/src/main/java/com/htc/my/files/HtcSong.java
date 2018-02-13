@@ -7,7 +7,7 @@ package com.htc.my.files;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class MySong implements Parcelable{
+public class HtcSong implements Parcelable{
     private Long id;             // 音乐id
 
     private String title;       // 标题
@@ -24,11 +24,11 @@ public class MySong implements Parcelable{
     private boolean favorite;
     private String album;
 
-    public MySong() {
+    public HtcSong() {
         // Empty
     }
 
-    public MySong(Parcel in) {
+    public HtcSong(Parcel in) {
         readFromParcel(in);
     }
 
@@ -135,15 +135,15 @@ public class MySong implements Parcelable{
 //        this.favorite = in.readInt() == 1;
     }
 
-    public static final Parcelable.Creator<MySong> CREATOR = new Parcelable.Creator<MySong>() {
+    public static final Parcelable.Creator<HtcSong> CREATOR = new Parcelable.Creator<HtcSong>() {
         @Override
-        public MySong createFromParcel(Parcel source) {
-            return new MySong(source);
+        public HtcSong createFromParcel(Parcel source) {
+            return new HtcSong(source);
         }
 
         @Override
-        public MySong[] newArray(int size) {
-            return new MySong[size];
+        public HtcSong[] newArray(int size) {
+            return new HtcSong[size];
         }
     };
 }

@@ -17,13 +17,13 @@ import java.util.List;
 public class AllSongs {
 
 
-    public static List<MySong> getAllSongs(Context context){
+    public static List<HtcSong> getAllSongs(Context context){
         Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 null,null,null,MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
-        List<MySong> allSongs = new ArrayList<MySong>();
+        List<HtcSong> allSongs = new ArrayList<HtcSong>();
         for(int i=0; i<cursor.getCount(); ++i){
             cursor.moveToNext();
-            MySong song = new MySong();
+            HtcSong song = new HtcSong();
             Long id = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media._ID));
             String title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
             String author = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
@@ -45,10 +45,10 @@ public class AllSongs {
         return allSongs;
     }
 
-    public static List<HashMap<String, String>> getMusicMaps(List<MySong> songs) { // {{{
+    public static List<HashMap<String, String>> getMusicMaps(List<HtcSong> songs) { // {{{
         List<HashMap<String, String>> allSongs = new ArrayList<HashMap<String, String>>();
-        for (Iterator<MySong> iterator = songs.iterator(); iterator.hasNext();) {
-            MySong song = (MySong) iterator.next();
+        for (Iterator<HtcSong> iterator = songs.iterator(); iterator.hasNext();) {
+            HtcSong song = (HtcSong) iterator.next();
             HashMap<String, String> map = new HashMap<String, String>();
             map.put("title", song.getTitle());
             map.put("Artist", song.getAuthor());

@@ -13,7 +13,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.htc.my.files.AllSongs;
-import com.htc.my.files.MySong;
+import com.htc.my.files.HtcSong;
 import com.htc.my.files.PlayerConstants;
 
 import java.util.ArrayList;
@@ -31,11 +31,11 @@ public class MyMusicPlayerService extends Service {
     private boolean isEnd = false;
 
     private MusicPlayerServiceBinder music_binder = new MusicPlayerServiceBinder();
-    private MySong current_song = null;
+    private HtcSong current_song = null;
     private int seek_position = -1;   // 标记上次暂停播放音乐时,已经播放到的位置
     private int song_id = 0;
     private int play_song_model = 0;  // 0 顺序 1 随机 2 单曲
-    private static ArrayList<MySong> allsongs;
+    private static ArrayList<HtcSong> allsongs;
     private int music_amount = 0;
     private ArrayList<Integer> randNumbers = new ArrayList<Integer>();
 
@@ -46,7 +46,7 @@ public class MyMusicPlayerService extends Service {
 
     public class MusicPlayerServiceBinder extends Binder {
         // 获取当前在后台上播放的音乐的所有信息
-        public MySong getSongOnService() {
+        public HtcSong getSongOnService() {
             return current_song;
         }
 
@@ -100,7 +100,7 @@ public class MyMusicPlayerService extends Service {
             return song_id;
         }
 
-        public ArrayList<MySong> getAllSongs(){
+        public ArrayList<HtcSong> getAllSongs(){
             return allsongs;
         }
 
@@ -145,7 +145,7 @@ public class MyMusicPlayerService extends Service {
     public void onCreate(){
         super.onCreate();
         if(allsongs==null) {
-            allsongs = (ArrayList<MySong>) AllSongs.getAllSongs(MyMusicPlayerService.this);
+            allsongs = (ArrayList<HtcSong>) AllSongs.getAllSongs(MyMusicPlayerService.this);
             music_amount = allsongs.size();
         }
         Log.i(TAG," on create");

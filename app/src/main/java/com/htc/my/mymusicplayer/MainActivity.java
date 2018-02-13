@@ -5,8 +5,6 @@ package com.htc.my.mymusicplayer;
  */
 
 import android.Manifest;
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
@@ -28,11 +26,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +35,7 @@ import android.widget.Toast;
 import com.htc.my.files.AllSongs;
 import com.htc.my.files.PlayerConstants;
 import com.htc.my.service.MyMusicPlayerService;
-import com.htc.my.files.MySong;
+import com.htc.my.files.HtcSong;
 
 import java.util.ArrayList;
 
@@ -50,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar main_toolbar;
 
     private RecyclerView recyclerView;               // 音乐列表
-    private ArrayList<MySong> allSongs;              // 储存所有的音乐
+    private ArrayList<HtcSong> allSongs;              // 储存所有的音乐
     private ArrayList<Boolean> allSongs_state = new ArrayList<Boolean>();   // 标记所有音乐列表的状态
     private MyMusicPlayerService.MusicPlayerServiceBinder music_binder;     // 与musicService进行交互的通道
-    private MySong current_song_OnService = null;                           // 标记当前正在musicService上播放的音乐
+    private HtcSong current_song_OnService = null;                           // 标记当前正在musicService上播放的音乐
     private ProgressBar progressBar;
     private AppCompatImageView image_view_play_toggle;
     private ImageView image_view_logo;
@@ -81,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode,int resultCode,Intent data){
         super.onActivityResult(requestCode,resultCode,data);
         if(music_binder!=null&&main_toolbar!=null && music_binder.getSongOnService()!=null) {
-            MySong temp = music_binder.getSongOnService();
+            HtcSong temp = music_binder.getSongOnService();
             main_toolbar.setTitle(temp.getTitle());
             music_text_name.setText(temp.getTitle());
             music_text_author.setText(temp.getAuthor());
@@ -148,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                     music_binder.pauseSongOnService();
                     image_view_play_toggle.setImageResource(com.htc.my.mymusicplayer.R.drawable.ic_play_1);
                 }else{
-                    MySong temp = music_binder.getSongOnService();
+                    HtcSong temp = music_binder.getSongOnService();
 
                     if(temp != null){
                         Intent service_intent = new Intent(MainActivity.this, MyMusicPlayerService.class);
@@ -222,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
                 current_song_OnService = music_binder.getSongOnService();
                 allSongs_state.set(position,music_binder.isPlayingOnService());
 
-                MySong temp = allSongs.get(position);
+                HtcSong temp = allSongs.get(position);
                 main_toolbar.setTitle(temp.getTitle());
                 music_text_name.setText(temp.getTitle());
                 music_text_author.setText(temp.getAuthor());
@@ -303,10 +298,10 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(final MyMusicPlayerViewHolder holder, int position)
         {
 
-            MySong mySong = allSongs.get(position);
-            holder.my_music_title.setText(mySong.getTitle());
-            holder.my_music_author.setText(mySong.getAuthor());
-            holder.my_music_duration.setText(AllSongs.formatTime(mySong.getDuration()));
+            HtcSong HtcSong = allSongs.get(position);
+            holder.my_music_title.setText(HtcSong.getTitle());
+            holder.my_music_author.setText(HtcSong.getAuthor());
+            holder.my_music_duration.setText(AllSongs.formatTime(HtcSong.getDuration()));
 
             // 自定义RecycleView内的点击事件(4)
             // 如果设置了回调，则设置点击事件
@@ -381,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
             if(music_binder.isPlayingOnService()) image_view_play_toggle.setImageResource(com.htc.my.mymusicplayer.R.drawable.ic_pause_1);
 
             if (allSongs.size()>0) {
-                MySong temp = allSongs.get(0);
+                HtcSong temp = allSongs.get(0);
                 main_toolbar.setTitle(temp.getTitle());
                 music_text_name.setText(temp.getTitle());
                 music_text_author.setText(temp.getAuthor());
@@ -393,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
             progressBar.setVisibility(ProgressBar.GONE);
 
             if(music_binder.getSongOnService()!=null) {
-                MySong temp = music_binder.getSongOnService();
+                HtcSong temp = music_binder.getSongOnService();
                 main_toolbar.setTitle(temp.getTitle());
                 music_text_name.setText(temp.getTitle());
                 music_text_author.setText(temp.getAuthor());

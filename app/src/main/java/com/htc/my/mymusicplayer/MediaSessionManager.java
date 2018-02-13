@@ -15,7 +15,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
 import android.view.KeyEvent;
 
-import com.htc.my.files.MySong;
+import com.htc.my.files.HtcSong;
 import com.htc.my.files.PlayerConstants;
 import com.htc.my.service.MyMusicPlayerService;
 
@@ -55,6 +55,8 @@ public class MediaSessionManager{
     public  void MediaSessionInitMainActivity(AppCompatImageView image_view_play_toggle ){
         this.image_view_play_toggle = image_view_play_toggle;
     }
+
+
     /**
      * API 21 以上 耳机多媒体按钮监听 MediaSessionCompat.Callback
      */
@@ -144,24 +146,27 @@ public class MediaSessionManager{
     /**
      * 更新正在播放的音乐信息，切换歌曲时调用
      */
-    public void updateMetaData(MySong song) {
+    public void updateMetaData(HtcSong song) {
 
         Log.d(TAG, "updateMetaData");
         MediaMetadataCompat.Builder metaDta = new MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_TITLE, song.getTitle())
-                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, song.getAlbum())
+                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, song.getAuthor())
                 .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, song.getAlbum())
                 .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST, song.getAlbum())
                 .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, song.getDuration());
         // .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, getCoverBitmap(songInfo));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            metaDta.putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS, song.get());
+
         }
         mMediaSession.setMetadata(metaDta.build());
 
     }
 
+    /**
+     *
+     */
 
     private void handleKeyEvent(KeyEvent event) {
         int keyCode = event.getKeyCode();
@@ -169,23 +174,10 @@ public class MediaSessionManager{
         Bundle msg = new Bundle();
         if (keyCode == KeyEvent.KEYCODE_MEDIA_PLAY) {
             Log.d(TAG,"KEYCODE_MEDIA_PLAY ");
-            // 将音乐暂停功能交给后台
-            Intent intent=new Intent(mContext, MyMusicPlayerService.class);
-            intent.putExtra("MSG",PlayerConstants.MSG_CONTINUE);
-            mContext.startService(intent);
-            if (play_pause_imageView != null) play_pause_imageView.setImageResource(R.drawable.ic_pause);
-            // 开始"大盘子"的运动
-            if(shadowImageView!=null) shadowImageView.startRotateAnimation();
-            if(image_view_play_toggle != null) image_view_play_toggle.setImageResource(R.drawable.ic_pause_1);
+            my_music_start_play();
         } else if (keyCode == KeyEvent.KEYCODE_MEDIA_PAUSE) {
             Log.d(TAG,"KEYCODE_MEDIA_PAUSE ");
-            Intent intent=new Intent(mContext, MyMusicPlayerService.class);
-            intent.putExtra("MSG", PlayerConstants.MSG_PAUSE);
-            mContext.startService(intent);
-            if (play_pause_imageView != null) play_pause_imageView.setImageResource(R.drawable.ic_play);
-            // 暂停"大盘子"的活动
-            if(shadowImageView!=null) shadowImageView.pauseRotateAnimation();
-            if(image_view_play_toggle != null) image_view_play_toggle.setImageResource(R.drawable.ic_play_1);
+            my_music_pause();
 
         } else if (keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
             Log.d(TAG,"KEYCODE_MEDIA_PLAY_PAUSE ");
@@ -204,6 +196,29 @@ public class MediaSessionManager{
             Log.d(TAG,"KEYCODE_MEDIA_REWIND ");
         }
 
+    }
+
+    // 开始播放音乐
+    private void my_music_start_play(){
+        // 将音乐暂停功能交给后台
+        Intent intent=new Intent(mContext, MyMusicPlayerService.class);
+        intent.putExtra("MSG",PlayerConstants.MSG_CONTINUE);
+        mContext.startService(intent);
+        if (play_pause_imageView != null) play_pause_imageView.setImageResource(R.drawable.ic_pause);
+        // 开始"大盘子"的运动
+        if(shadowImageView!=null) shadowImageView.startRotateAnimation();
+        if(image_view_play_toggle != null) image_view_play_toggle.setImageResource(R.drawable.ic_pause_1);
+    }
+
+    private  void my_music_pause(){
+        //音乐暂停
+        Intent intent=new Intent(mContext, MyMusicPlayerService.class);
+        intent.putExtra("MSG", PlayerConstants.MSG_PAUSE);
+        mContext.startService(intent);
+        if (play_pause_imageView != null) play_pause_imageView.setImageResource(R.drawable.ic_play);
+        // 暂停"大盘子"的活动
+        if(shadowImageView!=null) shadowImageView.pauseRotateAnimation();
+        if(image_view_play_toggle != null) image_view_play_toggle.setImageResource(R.drawable.ic_play_1);
     }
 
 }
