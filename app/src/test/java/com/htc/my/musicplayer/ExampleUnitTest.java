@@ -1,4 +1,4 @@
-package com.htc.my.mymusicplayer;
+package com.htc.my.musicplayer;
 
 import org.junit.Test;
 
