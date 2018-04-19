@@ -1,4 +1,4 @@
-package com.htc.my.mymusicplayer;
+package com.htc.my.musicplayer;
 
 /**
  * Created by lidongzhou on 18-2-13.
@@ -17,6 +17,7 @@ import android.view.KeyEvent;
 
 import com.htc.my.files.HtcSong;
 import com.htc.my.files.PlayerConstants;
+import com.htc.my.musicplayer.R;
 import com.htc.my.service.MyMusicPlayerService;
 
 

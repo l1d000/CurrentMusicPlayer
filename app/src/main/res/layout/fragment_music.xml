@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
-        <com.htc.my.mymusicplayer.ShadowImageView
+        <com.htc.my.musicplayer.ShadowImageView
             android:id="@+id/image_view_album"
             android:layout_width="260dp"
             android:layout_height="260dp"

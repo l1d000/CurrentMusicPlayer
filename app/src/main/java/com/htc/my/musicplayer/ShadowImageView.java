@@ -1,4 +1,4 @@
-package com.htc.my.mymusicplayer;
+package com.htc.my.musicplayer;
 
 /**
  * Created by lidongzhou on 18-2-13.

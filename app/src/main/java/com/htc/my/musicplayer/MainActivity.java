@@ -1,4 +1,4 @@
-package com.htc.my.mymusicplayer;
+package com.htc.my.musicplayer;
 
 /**
  * Created by lidongzhou on 18-2-13.
@@ -34,6 +34,7 @@ import android.widget.Toast;
 
 import com.htc.my.files.AllSongs;
 import com.htc.my.files.PlayerConstants;
+import com.htc.my.musicplayer.R;
 import com.htc.my.service.MyMusicPlayerService;
 import com.htc.my.files.HtcSong;
 
@@ -117,17 +118,17 @@ public class MainActivity extends AppCompatActivity {
 
     // 获取所有的组件
     private void  findAllViewById(){
-        main_toolbar = (Toolbar) findViewById(com.htc.my.mymusicplayer.R.id.main_toolbar);
+        main_toolbar = (Toolbar) findViewById(com.htc.my.musicplayer.R.id.main_toolbar);
         main_toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(main_toolbar);
 
-        recyclerView = (RecyclerView)findViewById(com.htc.my.mymusicplayer.R.id.recycler_view);
-        progressBar = (ProgressBar)findViewById(com.htc.my.mymusicplayer.R.id.progress_bar);
+        recyclerView = (RecyclerView)findViewById(com.htc.my.musicplayer.R.id.recycler_view);
+        progressBar = (ProgressBar)findViewById(com.htc.my.musicplayer.R.id.progress_bar);
 
-        image_view_play_toggle = (AppCompatImageView) findViewById(com.htc.my.mymusicplayer.R.id.image_view_play_toggle);
-        music_text_name = (TextView) findViewById(com.htc.my.mymusicplayer.R.id.music_text_view_name);
-        music_text_author = (TextView) findViewById(com.htc.my.mymusicplayer.R.id.music_text_view_artist);
-        layout_root = (RelativeLayout) findViewById(com.htc.my.mymusicplayer.R.id.layout_root);
+        image_view_play_toggle = (AppCompatImageView) findViewById(com.htc.my.musicplayer.R.id.image_view_play_toggle);
+        music_text_name = (TextView) findViewById(com.htc.my.musicplayer.R.id.music_text_view_name);
+        music_text_author = (TextView) findViewById(com.htc.my.musicplayer.R.id.music_text_view_artist);
+        layout_root = (RelativeLayout) findViewById(com.htc.my.musicplayer.R.id.layout_root);
         image_view_logo =(ImageView)findViewById(R.id.image_view_logo);
         mMediaSessionManager.MediaSessionInitMainActivity(image_view_play_toggle);
         Message msg = new Message();
@@ -143,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(music_binder.isPlayingOnService()){
                     music_binder.pauseSongOnService();
-                    image_view_play_toggle.setImageResource(com.htc.my.mymusicplayer.R.drawable.ic_play_1);
+                    image_view_play_toggle.setImageResource(com.htc.my.musicplayer.R.drawable.ic_play_1);
                 }else{
                     HtcSong temp = music_binder.getSongOnService();
 
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                         service_intent.putExtra("MSG", PlayerConstants.MSG_CONTINUE);
                         startService(service_intent);
                         current_song_state = true;
-                        image_view_play_toggle.setImageResource(com.htc.my.mymusicplayer.R.drawable.ic_pause_1);
+                        image_view_play_toggle.setImageResource(com.htc.my.musicplayer.R.drawable.ic_pause_1);
                     }else{
                         Intent service_intent = new Intent(MainActivity.this, MyMusicPlayerService.class);
                         service_intent.putExtra("song", allSongs.get(0));
@@ -161,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                         startService(service_intent);
                         allSongs_state.set(0, true);
                         current_song_state = true;
-                        image_view_play_toggle.setImageResource(com.htc.my.mymusicplayer.R.drawable.ic_pause_1);
+                        image_view_play_toggle.setImageResource(com.htc.my.musicplayer.R.drawable.ic_pause_1);
                     }
                 }
             }
@@ -185,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                     startService(service_intent);
                     allSongs_state.set(position, true);
                     current_song_state = true;
-                    image_view_play_toggle.setImageResource(com.htc.my.mymusicplayer.R.drawable.ic_pause_1);
+                    image_view_play_toggle.setImageResource(com.htc.my.musicplayer.R.drawable.ic_pause_1);
                 } else{
                     position = music_binder.getSongIdOnService();
                     Intent to_dapanzi_intent;                // 与"大盘子" 进行信息交互
@@ -245,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
                     startService(service_intent);
                     allSongs_state.set(position, true);
                     current_song_state = true;
-                    image_view_play_toggle.setImageResource(com.htc.my.mymusicplayer.R.drawable.ic_pause_1);
+                    image_view_play_toggle.setImageResource(com.htc.my.musicplayer.R.drawable.ic_pause_1);
                 }else{
                     Intent to_dapanzi_intent;                // 与"大盘子" 进行信息交互
                     to_dapanzi_intent = new Intent(MainActivity.this, MusicInfoActivity.class);
@@ -289,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
         public MyMusicPlayerViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
             MyMusicPlayerViewHolder holder = new MyMusicPlayerViewHolder(LayoutInflater.from(
-                    MainActivity.this).inflate(com.htc.my.mymusicplayer.R.layout.my_music_lists_itme, parent,
+                    MainActivity.this).inflate(com.htc.my.musicplayer.R.layout.my_music_lists_itme, parent,
                     false));
             Log.i("main","hello");
 
@@ -348,9 +349,9 @@ public class MainActivity extends AppCompatActivity {
             public MyMusicPlayerViewHolder(View view)
             {
                 super(view);
-                my_music_title = (TextView) view.findViewById(com.htc.my.mymusicplayer.R.id.text_view_name);
-                my_music_author = (TextView) view.findViewById(com.htc.my.mymusicplayer.R.id.text_view_artist);
-                my_music_duration = (TextView) view.findViewById(com.htc.my.mymusicplayer.R.id.text_view_duration);
+                my_music_title = (TextView) view.findViewById(com.htc.my.musicplayer.R.id.text_view_name);
+                my_music_author = (TextView) view.findViewById(com.htc.my.musicplayer.R.id.text_view_artist);
+                my_music_duration = (TextView) view.findViewById(com.htc.my.musicplayer.R.id.text_view_duration);
             }
         }
 
@@ -375,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
             setAllViewListener();
             loadMusicFiles();
 
-            if(music_binder.isPlayingOnService()) image_view_play_toggle.setImageResource(com.htc.my.mymusicplayer.R.drawable.ic_pause_1);
+            if(music_binder.isPlayingOnService()) image_view_play_toggle.setImageResource(com.htc.my.musicplayer.R.drawable.ic_pause_1);
 
             if (allSongs.size()>0) {
                 HtcSong temp = allSongs.get(0);

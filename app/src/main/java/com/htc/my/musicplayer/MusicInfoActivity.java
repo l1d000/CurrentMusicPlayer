@@ -1,4 +1,4 @@
-package com.htc.my.mymusicplayer;
+package com.htc.my.musicplayer;
 
 /**
  * Created by lidongzhou on 18-2-13.
@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.htc.my.files.AllSongs;
 import com.htc.my.files.PlayerConstants;
+import com.htc.my.musicplayer.R;
 import com.htc.my.service.MyMusicPlayerService;
 
 
